@@ -1,10 +1,10 @@
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
-
-
+const express = require('express');
+const axios = require('axios');
+const cors = require('cors');
 
 const app = express();
+const port = 5000;
+
 app.use(cors({
   origin: 'http://localhost:5173'
 }));
@@ -26,7 +26,7 @@ function isMangaQuestion(text) {
   return mangaKeywords.some(keyword => lower.includes(keyword));
 }
 
-app.post('/api/chat', async (req, res) => {
+app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   if (!userMessage) {
@@ -65,6 +65,7 @@ app.post('/api/chat', async (req, res) => {
     return res.status(500).json({ error: 'Erreur du serveur, veuillez réessayer.' });
   }
 });
-// Export obligatoire pour Vercel
-module.exports = app;
 
+app.listen(port, () => {
+  console.log(`✅ Backend démarré sur http://localhost:${port}`);
+});
