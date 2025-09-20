@@ -3,10 +3,10 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
+
 
 app.use(cors({
-  origin: 'http://localhost:5173'
+  origin: 'https://chatbot-ten-jade.vercel.app/'
 }));
 
 app.use(express.json());
@@ -26,7 +26,7 @@ function isMangaQuestion(text) {
   return mangaKeywords.some(keyword => lower.includes(keyword));
 }
 
-app.post('/chat', async (req, res) => {
+app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   if (!userMessage) {
@@ -66,6 +66,4 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`✅ Backend démarré sur http://localhost:${port}`);
-});
+export default app;
