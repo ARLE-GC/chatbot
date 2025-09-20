@@ -29,7 +29,7 @@ function App() {
   const message = inputValue.trim();
   if (!message) return;
 
-  if (!aiReady){ addMessages("⏳ AI service is still loading. Please wait...", false); return;}
+  if (!aiReady){ addMessages("⏳ Le service de CHATBOT est toujours en cours de chargement. Veuillez patienter...", false); return;}
 
   addMessages(message, true);
   setInputValue("");
