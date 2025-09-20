@@ -1,6 +1,7 @@
-import express from "express";
-import axios from "axioss";
-import cors from "cors";
+const express = require("express");
+const cors = require("cors");
+const axios = require("axios");
+
 
 
 const app = express();
@@ -65,4 +66,5 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 // Export obligatoire pour Vercel
-export default app;
+module.exports = app;
+
