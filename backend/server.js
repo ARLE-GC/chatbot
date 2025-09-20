@@ -26,7 +26,7 @@ function isMangaQuestion(text) {
   return mangaKeywords.some(keyword => lower.includes(keyword));
 }
 
-app.post('/api/chat', async (req, res) => {
+app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   if (!userMessage) {
