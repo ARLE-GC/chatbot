@@ -3,10 +3,10 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-
+const port = 5000;
 
 app.use(cors({
-  origin: 'https://chatbot-ten-jade.vercel.app/'
+  origin: 'http://localhost:5173'
 }));
 
 app.use(express.json());
@@ -66,4 +66,6 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-export default app;
+app.listen(port, () => {
+  console.log(`✅ Backend démarré sur http://localhost:${port}`);
+});
