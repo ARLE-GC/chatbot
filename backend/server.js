@@ -13,17 +13,28 @@ app.use(express.json());
 
 const GEMINI_API_KEY = 'AIzaSyD8OUvjAcDuvo-2TyM-R22cqiOs0Gem7Cg';
 
-
+// Liste de mots-clés pour mangas
 const mangaKeywords = [
   "manga", "anime", "naruto", "one piece", "bleach", "attack on titan",
   "aot", "jujutsu kaisen", "dragon ball", "dbz", "death note", "my hero academia",
   "mha", "demon slayer", "kimetsu no yaiba", "tokyo ghoul", "fairy tail"
 ];
 
+// Liste de mots de salutation
+const greetings = [
+  "bonjour", "salut", "coucou", "hello", "bonsoir", "hey", "yo", "hi"
+];
 
+// Vérifie si c’est une question manga
 function isMangaQuestion(text) {
   const lower = text.toLowerCase();
   return mangaKeywords.some(keyword => lower.includes(keyword));
+}
+
+// Vérifie si c’est une salutation
+function isGreeting(text) {
+  const lower = text.toLowerCase();
+  return greetings.some(greet => lower.includes(greet));
 }
 
 app.post('/chat', async (req, res) => {
@@ -33,7 +44,14 @@ app.post('/chat', async (req, res) => {
     return res.status(400).json({ error: 'Message is required' });
   }
 
-  
+  // Si c'est une salutation
+  if (isGreeting(userMessage)) {
+    return res.json({
+      message: "👋 Bonjour ! Ravi de discuter avec toi. Pose-moi une question sur les mangas !"
+    });
+  }
+
+  // Si ce n’est pas une question manga
   if (!isMangaQuestion(userMessage)) {
     return res.json({
       message: "⚠️ Désolé, je ne peux répondre qu’aux questions sur les mangas."
@@ -41,7 +59,7 @@ app.post('/chat', async (req, res) => {
   }
 
   try {
-    
+    // Appel à Gemini
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
